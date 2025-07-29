@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "carnage"
 description = "API for Carnage."
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 keywords = ["carnage", "game", "hardcore", "api"]
 license = { text = "MIT" }
 classifiers = [
@@ -27,6 +27,7 @@ dependencies = [
     "jinja2==3.1.6",
     "httpx==0.28.1",
     "python-jose[cryptography]==3.5.0",
+    "sanic[ext]>=25.3.0",
 ]
 dynamic = ["version"]
 

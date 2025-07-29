@@ -20,21 +20,23 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 """Module to hold all global pre-defined variables."""
-import os
 
-CARNAGE_ENVIRONMENT: str | None = os.getenv(
+import os
+from typing import Optional
+
+CARNAGE_ENVIRONMENT: Optional[str] = os.getenv(
     "CARNAGE_ENVIRONMENT",
     "development",
 )
-CARNAGE_SESSION_SECRET_KEY: str | None = os.getenv(
+CARNAGE_SESSION_SECRET_KEY: Optional[str] = os.getenv(
     "CARNAGE_SESSION_SECRET_KEY",
 )
 CARNAGE_CHAT_SECRET_KEY: str = os.getenv("CARNAGE_CHAT_SECRET_KEY", "")
 
-DATABASE_USERNAME: str | None = os.getenv("DATABASE_USERNAME")
-DATABASE_PASSWORD: str | None = os.getenv("DATABASE_PASSWORD")
-DATABASE_HOST: str | None = os.getenv("DATABASE_HOST")
-DATABASE_NAME: str | None = os.getenv("DATABASE_NAME")
+DATABASE_USERNAME: Optional[str] = os.getenv("DATABASE_USERNAME")
+DATABASE_PASSWORD: Optional[str] = os.getenv("DATABASE_PASSWORD")
+DATABASE_HOST: Optional[str] = os.getenv("DATABASE_HOST")
+DATABASE_NAME: Optional[str] = os.getenv("DATABASE_NAME")
 
-JWT_SECRET_KEY: str | None = os.getenv("JWT_SECRET_KEY")
-JWT_ALGORITHM: str | None = os.getenv("JWT_ALGORITHM", "HS256")
+JWT_SECRET_KEY: Optional[str] = os.getenv("JWT_SECRET_KEY")
+JWT_ALGORITHM: Optional[str] = os.getenv("JWT_ALGORITHM", "HS256")

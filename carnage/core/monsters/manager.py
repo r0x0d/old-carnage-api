@@ -19,26 +19,32 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Module to implement and override logger setups."""
+"""Modules that manages the monsters available."""
 
-import logging
+from functools import cached_property
+from typing import Any
 
-from rich.logging import RichHandler
+from carnage.monsters.base import BaseMonster
+from carnage.monsters.dragon import Dragon
 
 
-def setup_logger_handler(debug: bool) -> None:
-    """Setup the logger handler with the necessary configuration.
+class MonsterManager:
+    """Class that manages and maps the monsters."""
 
-    :param debug: Flag to determine if the debug logs should be used or not.
-    """
-    logging.basicConfig(
-        level=logging.NOTSET,
-        format="%(asctime)s: %(message)s",  # noqa
-        datefmt="[%X]",
-        handlers=[RichHandler()],
-    )
-    logger = logging.getLogger("carnage")
-    logger.propagate = True
+    @cached_property
+    def _monster_mapping(self) -> dict[str, Any]:
+        """Method that maps the available monsters to their simplified name.
 
-    if not debug:
-        logging.disable(logging.DEBUG)
+        :return: A dictionary with the seed name as key and a seed class
+            instance as value.
+        """
+        # TODO(r0x0d): Change type annotation for this property in the future
+        # to `BaseMonster`
+        return {"dragon": Dragon}
+
+    def select(self, monster: str) -> BaseMonster | None:
+        """Select an monster out of the list of available ones and return it.
+
+        :param monster: The name of the monster to be selected.
+        """
+        return self._monster_mapping.get(monster)

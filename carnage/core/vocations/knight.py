@@ -19,26 +19,18 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Module to implement and override logger setups."""
+"""Module that represents a Knight vocation."""
 
-import logging
+from carnage.database.models.vocation.vocation import VocationModel
+from carnage.vocations.base import BaseVocation
 
-from rich.logging import RichHandler
 
+class Knight(BaseVocation):
+    """Class that overrides methods and properties of vocation."""
 
-def setup_logger_handler(debug: bool) -> None:
-    """Setup the logger handler with the necessary configuration.
+    def __init__(self, vocation: VocationModel) -> None:
+        """Class that interprets an specific player.
 
-    :param debug: Flag to determine if the debug logs should be used or not.
-    """
-    logging.basicConfig(
-        level=logging.NOTSET,
-        format="%(asctime)s: %(message)s",  # noqa
-        datefmt="[%X]",
-        handlers=[RichHandler()],
-    )
-    logger = logging.getLogger("carnage")
-    logger.propagate = True
-
-    if not debug:
-        logging.disable(logging.DEBUG)
+        :param vocation: The model that represents a vocation.
+        """
+        super().__init__(vocation)

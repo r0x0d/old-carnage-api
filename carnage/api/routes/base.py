@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 """Module that implements the Base Route defaults methods."""
+
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 

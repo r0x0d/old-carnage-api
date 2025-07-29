@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 """Module to represent an Account schema."""
+
 from pydantic_sqlalchemy import sqlalchemy_to_pydantic
 
 from carnage.database.models.account import AccountModel

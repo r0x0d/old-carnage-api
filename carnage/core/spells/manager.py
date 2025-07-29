@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2022, Rodolfo Olivieri
+# Copyright (c) 2023, Rodolfo Olivieri
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -19,26 +19,32 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Module to implement and override logger setups."""
+"""Modules that manages the spells available."""
 
-import logging
+from functools import cached_property
+from typing import Any
 
-from rich.logging import RichHandler
+from carnage.spells.base import BaseSpell
+from carnage.spells.fireball import Fireball
 
 
-def setup_logger_handler(debug: bool) -> None:
-    """Setup the logger handler with the necessary configuration.
+class SpellManager:
+    """Class that manages and maps the spells."""
 
-    :param debug: Flag to determine if the debug logs should be used or not.
-    """
-    logging.basicConfig(
-        level=logging.NOTSET,
-        format="%(asctime)s: %(message)s",  # noqa
-        datefmt="[%X]",
-        handlers=[RichHandler()],
-    )
-    logger = logging.getLogger("carnage")
-    logger.propagate = True
+    @cached_property
+    def _spell_mapping(self) -> dict[str, Any]:
+        """Method that maps the available spells to their simplified name.
 
-    if not debug:
-        logging.disable(logging.DEBUG)
+        :return: A dictionary with the seed name as key and a seed class
+            instance as value.
+        """
+        # TODO(r0x0d): Change type annotation for this property in the future
+        # to `BaseSpell`
+        return {"fireball": Fireball}
+
+    def select(self, spell: str) -> BaseSpell | None:
+        """Select an spell out of the list of available ones and return it.
+
+        :param spell: The name of the spell to be selected.
+        """
+        return self._spell_mapping.get(spell)

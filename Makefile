@@ -8,6 +8,11 @@
 DIRENV_BINARY := $(shell command -v direnv 2> /dev/null)
 WAIT_TIME_FOR_DB := 10
 
+# Use recursive assignment so UV is evaluated each time it's used
+UV = $(shell command -v uv || echo "$$HOME/.local/bin/uv")
+
+default: help
+
 help:
 	@echo "make"
 	@echo "    clean"
@@ -69,3 +74,10 @@ test: setup
 test-coverage: setup
 	tox
 	coverage html
+
+install-tools: ## Install required utilities/tools
+	@command -v uv > /dev/null || { echo >&2 "uv is not installed. Installing..."; curl -LsSf https://astral.sh/uv/install.sh | sh; }
+	@$(UV) --version
+
+install: install-tools ## Sync all required dependencies
+	@$(UV) sync --extra dev --extra docs

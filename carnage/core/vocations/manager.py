@@ -19,26 +19,32 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-"""Module to implement and override logger setups."""
+"""Module that manages all vocations available."""
 
-import logging
+from functools import cached_property
+from typing import Any
 
-from rich.logging import RichHandler
+from carnage.vocations.base import BaseVocation
+from carnage.vocations.knight import Knight
 
 
-def setup_logger_handler(debug: bool) -> None:
-    """Setup the logger handler with the necessary configuration.
+class VocationManager:
+    """Class that maps the order and the vocations."""
 
-    :param debug: Flag to determine if the debug logs should be used or not.
-    """
-    logging.basicConfig(
-        level=logging.NOTSET,
-        format="%(asctime)s: %(message)s",  # noqa
-        datefmt="[%X]",
-        handlers=[RichHandler()],
-    )
-    logger = logging.getLogger("carnage")
-    logger.propagate = True
+    @cached_property
+    def _vocation_mapping(self) -> dict[str, Any]:
+        """Method that maps the available vocations to their simplified name.
 
-    if not debug:
-        logging.disable(logging.DEBUG)
+        :return: A dictionary with the seed name as key and a seed class
+            instance as value.
+        """
+        # TODO(r0x0d): Change type annotation for this property in the future
+        # for `BaseVocation`
+        return {"knight": Knight}
+
+    def select(self, vocation: str) -> BaseVocation | None:
+        """Select an vocation out of the list of available ones and return it.
+
+        :param vocation: The name of the vocation to be selected.
+        """
+        return self._vocation_mapping.get(vocation)
